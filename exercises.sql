@@ -13,6 +13,18 @@ ORDER BY total_amount DESC;
 
 --2.1. Найти количество дочерних элементов первого уровня вложенности для категорий номенклатуры.
 
+-- Вариант 1.
+
+SELECT
+    c.name AS category_name,
+    COUNT(child.id) AS children_count
+FROM categories c
+LEFT JOIN categories child ON child.parent_id = c.id
+GROUP BY c.id, c.name
+ORDER BY c.name;
+
+
+-- Вариант 2.
 WITH RECURSIVE all_categories AS (
     SELECT 
         id,
